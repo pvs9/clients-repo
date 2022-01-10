@@ -4,7 +4,7 @@
 
 <description>PHPCS configuration file.</description>
 <file>app</file>
-<file>test</file>
+<file>tests</file>
 
 <exclude-pattern>*/migrations/*</exclude-pattern>
 
