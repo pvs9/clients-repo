@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/clients')->name('clients.')->group(function () {
+    Route::get('/', [ClientController::class, 'list'])->name('list');
+
+    Route::prefix('/{client}')->name('show.')->group(function () {
+        Route::get('/', [ClientController::class, 'show'])->name('info');
+        Route::patch('/', [ClientController::class, 'update'])->name('update');
+        Route::delete('/', [ClientController::class, 'delete'])->name('delete');
+    });
+});
+
+Route::prefix('/auth')->name('auth.')->group(function () {
+    Route::get('/me', [AuthController::class, 'me'])->name('me');
+
+    Route::middleware('guest')->group(function () {
+        Route::post('/login', [AuthController::class, 'login'])->name('login');
+        Route::post('/register', [AuthController::class, 'register'])->name('register');
+    });
+
+    Route::middleware('auth')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    });
 });

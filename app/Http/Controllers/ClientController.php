@@ -23,6 +23,8 @@ class ClientController extends Controller
 
     public function show(Client $client): ClientResource
     {
+        $client->loadMissing('manager');
+
         return ClientResource::make($client);
     }
 

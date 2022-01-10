@@ -5,7 +5,6 @@ namespace App\Services\Client;
 use App\Models\Client;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 
 class ClientListBuilder
 {
@@ -39,15 +38,16 @@ class ClientListBuilder
 
     protected function applySorting(string $sortBy): static
     {
-        $sortByRelation = Str::contains($sortBy, '.');
+        $sortByManager = $sortBy === 'manager.name';
 
-        if ($sortByRelation) {
-            $parts = explode('.', $sortBy);
-            $sortBy = sprintf('%s.%s', Str::snake(Str::pluralStudly($parts[0])), $parts[1]);
+        if ($sortByManager) {
+            $this->getQuery()
+                ->join('users', 'users.id', '=', 'clients.manager_id')
+                ->orderBy('users.name');
+        } else {
+            $this->getQuery()
+                ->orderBy($sortBy);
         }
-
-        $this->getQuery()
-            ->orderBy($sortBy);
 
         return $this;
     }
