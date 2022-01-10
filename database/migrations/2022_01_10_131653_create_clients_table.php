@@ -17,7 +17,7 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('manager_id')->constrained('users');
-            $table->json('tags');
+            $table->json('tags')->nullable();
             $table->timestamps();
         });
     }
