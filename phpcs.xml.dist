@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 
-<ruleset  name="PHP_CodeSniffer">
+<ruleset name="PHP_CodeSniffer">
 
 <description>PHPCS configuration file.</description>
 <file>app</file>
+<file>test</file>
 
 <exclude-pattern>*/migrations/*</exclude-pattern>
 
-<rule  ref="PSR12"/>
+<rule ref="PSR12"/>
 
 </ruleset>

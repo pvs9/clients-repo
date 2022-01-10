@@ -68,11 +68,8 @@ class ClientListBuilder
     public function getClients(array $filters = []): LengthAwarePaginator
     {
         $this->setQuery()
-            ->loadNecessaryRelations();
-
-        if (isset($filters['sort_by'])) {
-            $this->applySorting($filters['sort_by']);
-        }
+            ->loadNecessaryRelations()
+            ->applySorting($filters['sort_by'] ?? 'id');
 
         if (isset($filters['query'])) {
             $this->applySearch($filters['query']);
