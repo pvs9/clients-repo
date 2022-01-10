@@ -24,12 +24,17 @@ class ClientListBuilder
 
     protected function applySearch(string $search): static
     {
+        $isNumber = is_numeric($search);
+
         $this->getQuery()
-            ->where(function (Builder $query) use ($search) {
-                $query->where('id', $search)
-                    ->orWhere('name', 'ilike', "%{$search}%")
+            ->where(function (Builder $query) use ($isNumber, $search) {
+                $query
+                    ->where('name', 'ilike', "%{$search}%")
                     ->orWhereHas('manager', function ($query) use ($search) {
                         $query->where('name', 'ilike', "%{$search}%");
+                    })
+                    ->when($isNumber, function ($query) use ($search) {
+                        return $query->orWhere('id', $search);
                     });
             });
 
