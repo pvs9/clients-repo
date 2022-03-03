@@ -1,24 +1,30 @@
-## Test project
+## php-test-task
 
-A PSR12 and PHPStan level 7 compliant test project
+A PSR12 and PHPStan level 7 compliant test project with PHP 8 and Laravel 8
+providing functionality:
 
-#### Запуск проекта
+* Full JWT token auth lifecycle via REST API
+* Full CRUD (except create) for `Client` model
+* `Client` list search, filters and sorting
+* Test coverage using `Pest` for clients list
+* Postman collection is applied in project root
 
-**Если у тебя не поднят Docker - Почему ты еще в разработке**
-**Если у тебя стоит Laravel Sail - начинай со второго пункта**
+#### Project setup
 
-1. Установи зависимости `composer install`
-2. Подготовь `.env` файл
-3. Запусти контейнеры `sail up -d` или `./vendor/bin/sail up -d`
-4. `sail artisan migrate:fresh` или `./vendor/bin/sail artisan migrate:fresh`
+**Docker and Laravel Sail are required to start**
 
-#### Тесты
+1. Install dependencies via `composer install`
+2. Prepare a valid `.env` file
+3. Run containers via `sail up -d` or `./vendor/bin/sail up -d`
+4. `sail artisan migrate:fresh` or `./vendor/bin/sail artisan migrate:fresh` to run needed migrations
 
-Для тестов используется свежая оболочка над PHPUnit - Pest.
-В качестве примера покрыл тестами список клиентов
+#### Tests
 
-Для запуска тестов:
-`sail artisan test` или `./vendor/bin/sail artisan test`
+For writing tests I used Pest - a new extension library for PHPunit
+Just as an example I covered clients list feature with tests.
 
-Для запуска Coverage:
-`sail artisan test --coverage` или `./vendor/bin/sail artisan test --coverage`
+To run tests use:
+`sail artisan test` or `./vendor/bin/sail artisan test`
+
+To run tests in coverage mode use:
+`sail artisan test --coverage` or `./vendor/bin/sail artisan test --coverage`
